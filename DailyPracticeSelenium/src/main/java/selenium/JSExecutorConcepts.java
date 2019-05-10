@@ -30,11 +30,13 @@ public class JSExecutorConcepts {
 		driver.get("https://www.pnc.com");
 
 		WebElement pncLogo = driver.findElement(By.xpath("//img[@alt='PNC']"));
+		WebElement aboutUsLink = driver.findElement(By.xpath("//span[contains(text(),'About Us')]"));
 
 		flashObject(pncLogo, driver); // highlight WebElement
 		drawBorder(pncLogo, driver); // draw a border around the WebElement
 		takeScreenshot("pncLogo", ".jpg"); // take a screenshot
-		generateAlert(driver, "There is an issue with pncLogo on Home page");
+//		generateAlert(driver, "There is an issue with pncLogo on Home page");
+		clickElementByJS(aboutUsLink, driver);
 
 //		driver.quit();
 
@@ -88,6 +90,11 @@ public class JSExecutorConcepts {
 	public static void generateAlert(WebDriver driver, String message) {
 		js = (JavascriptExecutor) driver;
 		js.executeScript("alert('" + message + "')");
+	}
+
+	public static void clickElementByJS(WebElement element, WebDriver driver) {
+		js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click();", element);
 	}
 
 }
