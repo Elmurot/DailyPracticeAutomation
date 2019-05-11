@@ -3,7 +3,6 @@ package selenium;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.io.FileHandler;
 
-public class JSExecutorConcepts {
+public class JacaScriptExecutorConcepts {
 
 	static WebDriver driver;
 	static JavascriptExecutor js;
@@ -25,8 +24,8 @@ public class JSExecutorConcepts {
 
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.get("https://www.pnc.com");
 
 		WebElement pncLogo = driver.findElement(By.xpath("//img[@alt='PNC']"));
@@ -36,10 +35,19 @@ public class JSExecutorConcepts {
 		drawBorder(pncLogo, driver); // draw a border around the WebElement
 		takeScreenshot("pncLogo", ".jpg"); // take a screenshot
 //		generateAlert(driver, "There is an issue with pncLogo on Home page");
-		clickElementByJS(aboutUsLink, driver);
+		clickElementByJS(aboutUsLink, driver); // click on element by using JS executor
+
+//		refresh the browser by selenium:
+//		driver.navigate().refresh(); //  -> 1st way
+		refreshBrowserByJS(driver); // this method refresh the browser -> 2nd way
+		System.out.println(getTitleByJS(driver)); // get title of the page using JS
+		System.out.println(getInnerTextOfThePage(driver)); // get the page text
+//		scrollPageDown(driver); // scrolling down of the page 
+//		WebElement joinUsLink = driver.findElement(By.xpath("//h4[contains(text(),'Join Us')]"));
+//		scrollIntoView(joinUsLink, driver);
+		scrollPageByPixel(0, 150, driver);
 
 //		driver.quit();
-
 	}
 
 //	 ************** flashObject() method is used to flash WebElement **********************
@@ -56,7 +64,6 @@ public class JSExecutorConcepts {
 	public static void changeColor(WebElement element, String color, WebDriver driver) {
 		js = ((JavascriptExecutor) driver);
 		js.executeScript("arguments[0].style.backgroundColor = '" + color + "'", element);
-
 		try {
 			Thread.sleep(200);
 		} catch (InterruptedException e) {
@@ -74,8 +81,6 @@ public class JSExecutorConcepts {
 		}
 	}
 
-//	 **************** takeScreenshot() method is used to take a Screenshot *******************
-
 	public static void takeScreenshot(String fileName, String extension) throws IOException {
 
 		String timestamp = new SimpleDateFormat("yyyy_MM_dd__hh_mm_ss").format(new Date());
@@ -85,16 +90,45 @@ public class JSExecutorConcepts {
 						+ fileName + " " + timestamp + extension));
 	}
 
-//	 **************** generateAlert() method is used to generate alert for WebElement *******************
-
 	public static void generateAlert(WebDriver driver, String message) {
-		js = (JavascriptExecutor) driver;
+		js = ((JavascriptExecutor) driver);
 		js.executeScript("alert('" + message + "')");
 	}
 
 	public static void clickElementByJS(WebElement element, WebDriver driver) {
-		js = (JavascriptExecutor) driver;
+		js = ((JavascriptExecutor) driver);
 		js.executeScript("arguments[0].click();", element);
 	}
 
+	public static void refreshBrowserByJS(WebDriver driver) {
+		js = ((JavascriptExecutor) driver);
+		js.executeScript("history.go(0)");
+	}
+
+	public static String getTitleByJS(WebDriver driver) {
+		js = ((JavascriptExecutor) driver);
+		String title = js.executeScript("return document.title;").toString();
+		return title;
+	}
+
+	public static String getInnerTextOfThePage(WebDriver driver) {
+		js = ((JavascriptExecutor) driver);
+		String entireTextOfThePage = js.executeScript("return document.documentElement.innerText;").toString();
+		return entireTextOfThePage;
+	}
+
+	public static void scrollPageDown(WebDriver driver) {
+		js = ((JavascriptExecutor) driver);
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+	}
+
+	public static void scrollIntoView(WebElement element, WebDriver driver) {
+		js = ((JavascriptExecutor) driver);
+		js.executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
+	public static void scrollPageByPixel(int startingPoint, int endingPoint, WebDriver driver) {
+		js = ((JavascriptExecutor) driver);
+		js.executeScript("window.scrollBy(" + startingPoint + "," + endingPoint + ")");
+	}
 }
