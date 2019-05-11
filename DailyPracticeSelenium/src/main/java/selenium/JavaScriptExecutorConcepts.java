@@ -15,7 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.io.FileHandler;
 
-public class JacaScriptExecutorConcepts {
+public class JavaScriptExecutorConcepts {
 
 	static WebDriver driver;
 	static JavascriptExecutor js;
