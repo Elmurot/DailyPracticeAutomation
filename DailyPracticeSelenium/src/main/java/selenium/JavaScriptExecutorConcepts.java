@@ -78,7 +78,7 @@ public class JavaScriptExecutorConcepts {
 	public static void takeScreenshot(String fileName, String extension) throws IOException {
 		String timestamp = new SimpleDateFormat("yyyy_MM_dd__hh_mm_ss").format(new Date());
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileHandler.copy(src, new File("/Users/elmurotyangiboev/git/CucumberBDDFramework/CucumberBDDFramework/src/Screenshots/"
+		FileHandler.copy(src, new File("/Users/elmurotyangiboev/git/DailyPracticeAutomation/DailyPracticeSelenium/Screenshots/"
 						+ fileName + " " + timestamp + extension));
 	}
 
