@@ -45,12 +45,10 @@ public class JavaScriptExecutorConcepts {
 //		scrollPageDown(driver); // scrolling down of the page 
 //		WebElement joinUsLink = driver.findElement(By.xpath("//h4[contains(text(),'Join Us')]"));
 //		scrollIntoView(joinUsLink, driver);
-		scrollPageByPixel(0, 150, driver);
+		scrollPageByPixel(0, 1500, driver);
 
 //		driver.quit();
 	}
-
-//	 ************** flashObject() method is used to flash WebElement **********************
 
 	public static void flashObject(WebElement element, WebDriver driver) {
 		js = ((JavascriptExecutor) driver);
@@ -62,73 +60,59 @@ public class JavaScriptExecutorConcepts {
 	}
 
 	public static void changeColor(WebElement element, String color, WebDriver driver) {
-		js = ((JavascriptExecutor) driver);
-		js.executeScript("arguments[0].style.backgroundColor = '" + color + "'", element);
+		((JavascriptExecutor) driver).executeScript("arguments[0].style.backgroundColor = '" + color + "'", element);
 		try {
 			Thread.sleep(200);
 		} catch (InterruptedException e) {
 		}
 	}
 
-//	 ************** drawBorder() method is used to draw border for WebElement ****************
-
 	public static void drawBorder(WebElement element, WebDriver driver) {
-		js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].style.border = '3px solid red'", element);
-		try {
+		((JavascriptExecutor) driver).executeScript("arguments[0].style.border = '3px solid red'", element);
+		try {	
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 		}
 	}
 
 	public static void takeScreenshot(String fileName, String extension) throws IOException {
-
 		String timestamp = new SimpleDateFormat("yyyy_MM_dd__hh_mm_ss").format(new Date());
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileHandler.copy(src,
-				new File("/Users/elmurotyangiboev/git/CucumberBDDFramework/CucumberBDDFramework/src/Screenshots/"
+		FileHandler.copy(src, new File("/Users/elmurotyangiboev/git/CucumberBDDFramework/CucumberBDDFramework/src/Screenshots/"
 						+ fileName + " " + timestamp + extension));
 	}
 
 	public static void generateAlert(WebDriver driver, String message) {
-		js = ((JavascriptExecutor) driver);
-		js.executeScript("alert('" + message + "')");
+		((JavascriptExecutor) driver).executeScript("alert('" + message + "')");
 	}
 
 	public static void clickElementByJS(WebElement element, WebDriver driver) {
-		js = ((JavascriptExecutor) driver);
-		js.executeScript("arguments[0].click();", element);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
 	}
 
 	public static void refreshBrowserByJS(WebDriver driver) {
-		js = ((JavascriptExecutor) driver);
-		js.executeScript("history.go(0)");
+		 ((JavascriptExecutor) driver).executeScript("history.go(0)");
 	}
 
 	public static String getTitleByJS(WebDriver driver) {
-		js = ((JavascriptExecutor) driver);
-		String title = js.executeScript("return document.title;").toString();
+		String title = ((JavascriptExecutor) driver).executeScript("return document.title;").toString();
 		return title;
 	}
 
 	public static String getInnerTextOfThePage(WebDriver driver) {
-		js = ((JavascriptExecutor) driver);
-		String entireTextOfThePage = js.executeScript("return document.documentElement.innerText;").toString();
+		String entireTextOfThePage = ((JavascriptExecutor) driver).executeScript("return document.documentElement.innerText;").toString();
 		return entireTextOfThePage;
 	}
 
 	public static void scrollPageDown(WebDriver driver) {
-		js = ((JavascriptExecutor) driver);
-		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
 	}
 
 	public static void scrollIntoView(WebElement element, WebDriver driver) {
-		js = ((JavascriptExecutor) driver);
-		js.executeScript("arguments[0].scrollIntoView(true);", element);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 	}
 
 	public static void scrollPageByPixel(int startingPoint, int endingPoint, WebDriver driver) {
-		js = ((JavascriptExecutor) driver);
-		js.executeScript("window.scrollBy(" + startingPoint + "," + endingPoint + ")");
+		((JavascriptExecutor) driver).executeScript("window.scrollBy(" + startingPoint + "," + endingPoint + ")");
 	}
 }
